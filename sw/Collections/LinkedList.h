@@ -25,17 +25,25 @@ typedef struct LinkedList
     Node* head;
 } LinkedList;
 
+//This function assumes the linked list has already been allocated memory dynamically
 void initEmptyLinkedList(LinkedList* list, int type);
+//Takes care of freeing the linked list and all data inside it, even if the memory
+//was originally allocated outside of the linked list
 void freeLinkedList(LinkedList* list);
 
 // These functions will return -1 on failure
 int size_ll(LinkedList* list, int type);
 int type_ll(LinkedList* list);
+
+// These functions will return 1 on failure, 0 on success
+//This function assumes the linked list and data have already been allocated memory dynamically
 int insert_ll(LinkedList* list, void* data, int type, int index);
 int append_ll(LinkedList* list, void* data, int type);
 
 // These functions will return a null pointer on failure
 const void* at_ll(LinkedList* list, int type, int index);
 const void* last_ll(LinkedList* list, int type);
+
+void printIntegerLinkedList(LinkedList* list, const char* nameOfList);
 
 #endif
