@@ -36,14 +36,17 @@ int size_ll(LinkedList* list, int type);
 int type_ll(LinkedList* list);
 
 // These functions will return 1 on failure, 0 on success
-//This function assumes the linked list and data have already been allocated memory dynamically
+// This function assumes the linked list and data have already been allocated memory dynamically
 int insert_ll(LinkedList* list, void* data, int type, int index);
 int append_ll(LinkedList* list, void* data, int type);
+int push_front_ll(LinkedList* list, void* data, int type);
 
 // These functions will return a null pointer on failure
 const void* at_ll(LinkedList* list, int type, int index);
 const void* last_ll(LinkedList* list, int type);
 
+// Functions can be added here to print linked list for all basic types
+// For custom structs, a similar function must live outside of the toolkit
 void printIntegerLinkedList(LinkedList* list, const char* nameOfList);
 
 #endif

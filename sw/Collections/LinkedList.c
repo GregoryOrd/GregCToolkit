@@ -18,22 +18,31 @@ void main()
 
     int* first = (int*)malloc(sizeof(int));
     *first = 0;
-    insert_ll(list, first, type, 0);
+    append_ll(list, first, type);
     int* second = (int*)malloc(sizeof(int));
     *second = 1;
-    insert_ll(list, second, type, 1);
+    append_ll(list, second, type);
     int* third = (int*)malloc(sizeof(int));
     *third = 2;
-    insert_ll(list, third, type, 2);
+    append_ll(list, third, type);
     int* fifth = (int*)malloc(sizeof(int));
     *fifth = 3;
-    insert_ll(list, fifth, type, 3);
+    append_ll(list, fifth, type);
     int* fourth = (int*)malloc(sizeof(int));
     *fourth = 4;
     insert_ll(list, fourth, type, 3);
     int* sixth = (int*)malloc(sizeof(int));
     *sixth = 5;
-    insert_ll(list, sixth, type, 1);   
+    insert_ll(list, sixth, type, 1);
+    int* seventh = (int*)malloc(sizeof(int));
+    *seventh = -1;
+    push_front_ll(list, seventh, type);
+    int* eigth = (int*)malloc(sizeof(int));
+    *eigth = -2;
+    push_front_ll(list, eigth, type);   
+    int* ninth = (int*)malloc(sizeof(int));
+    *ninth = 425;
+    append_ll(list, ninth, type);
 
     printIntegerLinkedList(list, "TestList");
     freeLinkedList(list);
@@ -136,6 +145,7 @@ int insert_ll(LinkedList* list, void* data, int type, int index)
 
         if(i == 0)
         {
+            newNode->next = list->head;
             list->head = newNode;
         }
         else
@@ -152,7 +162,14 @@ int insert_ll(LinkedList* list, void* data, int type, int index)
 
 int append_ll(LinkedList* list, void* data, int type)
 {
+    return insert_ll(list, data, type, list->size);
 }
+
+int push_front_ll(LinkedList* list, void* data, int type)
+{
+    return insert_ll(list, data, type, 0);
+}
+
 const void* at_ll(LinkedList* list, int type, int index){}
 const void* last_ll(LinkedList* list, int type){}
 
