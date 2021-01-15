@@ -9,45 +9,6 @@
 int checkType(LinkedList* list, int type);
 int checkIndex(LinkedList* list, int index);
 
-
-void main()
-{
-    int type = 1;
-    LinkedList* list = (LinkedList*)malloc(sizeof(LinkedList));
-    initEmptyLinkedList(list, type);
-
-    int* first = (int*)malloc(sizeof(int));
-    *first = 0;
-    append_ll(list, first, type);
-    int* second = (int*)malloc(sizeof(int));
-    *second = 1;
-    append_ll(list, second, type);
-    int* third = (int*)malloc(sizeof(int));
-    *third = 2;
-    append_ll(list, third, type);
-    int* fifth = (int*)malloc(sizeof(int));
-    *fifth = 3;
-    append_ll(list, fifth, type);
-    int* fourth = (int*)malloc(sizeof(int));
-    *fourth = 4;
-    insert_ll(list, fourth, type, 3);
-    int* sixth = (int*)malloc(sizeof(int));
-    *sixth = 5;
-    insert_ll(list, sixth, type, 1);
-    int* seventh = (int*)malloc(sizeof(int));
-    *seventh = -1;
-    push_front_ll(list, seventh, type);
-    int* eigth = (int*)malloc(sizeof(int));
-    *eigth = -2;
-    push_front_ll(list, eigth, type);   
-    int* ninth = (int*)malloc(sizeof(int));
-    *ninth = 425;
-    append_ll(list, ninth, type);
-
-    printIntegerLinkedList(list, "TestList");
-    freeLinkedList(list);
-}
-
 //////////////////////////////////////////////////////////////////////
 //              Function Implementation Section                     //
 //////////////////////////////////////////////////////////////////////
@@ -170,8 +131,37 @@ int push_front_ll(LinkedList* list, void* data, int type)
     return insert_ll(list, data, type, 0);
 }
 
-const void* at_ll(LinkedList* list, int type, int index){}
-const void* last_ll(LinkedList* list, int type){}
+const void* at_ll(LinkedList* list, int type, int index)
+{
+    int typeError = checkType(list, type);
+    int indexToCheck = index - 1;
+    if(indexToCheck < 0)
+    {
+        indexToCheck = 0;
+    }
+    int indexError = checkIndex(list, index);
+    if(!typeError && !indexError)
+    {
+        Node* currentPtr = list->head;
+        int i = 0;
+        while(currentPtr != 0 && i < index)
+        {
+            i++;
+            if(i > 0)
+            {
+                currentPtr = currentPtr->next;
+            }
+        }
+
+        return currentPtr->data;
+    }
+    return NULL;
+}
+
+const void* last_ll(LinkedList* list, int type)
+{
+    return at_ll(list, type, list->size-1);
+}
 
 void printIntegerLinkedList(LinkedList* list, const char* nameOfList)
 {
