@@ -29,7 +29,7 @@ typedef struct LinkedList
 void initEmptyLinkedList(LinkedList* list, int type);
 //Takes care of freeing the linked list and all data inside it, even if the memory
 //was originally allocated outside of the linked list
-void freeLinkedList(LinkedList* list);
+void freeLinkedList(LinkedList* list, void(*freeData)(void*));
 
 // These functions will return -1 on failure
 int size_ll(LinkedList* list, int type);

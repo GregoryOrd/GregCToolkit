@@ -47,13 +47,13 @@ void initEmptyLinkedList(LinkedList* list, int type)
     list->head = 0;
 }
 
-void freeLinkedList(LinkedList* list)
+void freeLinkedList(LinkedList* list, void (*freeData)(void *))
 {
     Node* itr = list->head;
     while(itr != 0)
     {
         Node* prev = itr;
-        free(prev->data);
+        (*freeData)(prev->data);
         prev->next = 0;
         free(prev);
         itr = itr->next;
