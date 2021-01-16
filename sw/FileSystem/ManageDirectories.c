@@ -5,14 +5,14 @@
 
 #include <stdlib.h>
 
-void makeDir(char* dirName)
+int makeDir(char* dirName)
 {
-    char* const argv[] = {mkdir, dirName, NULL};
-    forkAndRunChildProcess(mkdir, argv);
+    char* const argv[] = {mkdir, dirName, "-p", NULL};
+    return forkAndRunChildProcess(mkdir, argv);
 }
 
-void removeDir(char* folderName)
+int removeDir(char* folderName)
 {
     char * const argv[] = {rm, folderName, "-r", NULL};
-    forkAndRunChildProcess(rm, argv);  
+    return forkAndRunChildProcess(rm, argv);  
 }

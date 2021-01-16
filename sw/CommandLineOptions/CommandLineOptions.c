@@ -5,19 +5,21 @@
 #include <stdlib.h>
 #include <string.h>
 
-void initCommandLineOptions(CommandLineOptionList* list)
+void initCommandLineOptions(CommandLineOptionList* list, int size)
 {
-    list->size = 1;
-    list->options = (CommandLineOption*)malloc(sizeof(CommandLineOption));
+    list->size = size;
+    list->options = (CommandLineOption*)malloc(size * sizeof(CommandLineOption));
     
-    list->options[0].description = (char*)malloc(sizeof(char*));
-    list->options[0].optionText = (char*)malloc(sizeof(char*));
-    list->options[0].flagValue = (bool*)malloc(sizeof(bool*));
+    for(int i = 0; i < size; i++)
+    {
+        list->options[i].description = (char*)malloc(sizeof(char*));
+        list->options[i].optionText = (char*)malloc(sizeof(char*));
+        list->options[i].flagValue = (bool*)malloc(sizeof(bool*));
 
-    strcpy(list->options[0].description, NULL_COMMAND_LINE_DESCRIPTION);
-    strcpy(list->options[0].optionText, NULL_COMMAND_LINE_OPTION_TEXT);
-    *list->options[0].flagValue = NULL_COMMAND_LINE_FLAG_VALUE;
-    
+        strcpy(list->options[i].description, NULL_COMMAND_LINE_DESCRIPTION);
+        strcpy(list->options[i].optionText, NULL_COMMAND_LINE_OPTION_TEXT);
+        *list->options[i].flagValue = NULL_COMMAND_LINE_FLAG_VALUE;
+    }
 }
 
 void freeCommandLineOptions(CommandLineOptionList* list)
@@ -35,9 +37,10 @@ void processCommandLineArgs(int argc, char* argv[], CommandLineOptionList* optio
 {
     for(int i = 1; i < argc; i++)
     {
-        if(checkForOption(optionsList, argv[i]))
+        int indexOfOptionInOptionsList = checkForOption(optionsList, argv[i]);
+        if(indexOfOptionInOptionsList > -1)
         {
-            *optionsList->options[i-1].flagValue = !(*optionsList->options[i-1].flagValue);
+            *optionsList->options[indexOfOptionInOptionsList].flagValue = !(*optionsList->options[indexOfOptionInOptionsList].flagValue);
         }
         else
         {
@@ -48,17 +51,17 @@ void processCommandLineArgs(int argc, char* argv[], CommandLineOptionList* optio
     }
 }
 
-bool checkForOption(const CommandLineOptionList* optionsList, char* optionToFind)
+int checkForOption(const CommandLineOptionList* optionsList, char* optionToFind)
 {
-    bool optionFound = false;
+    int foundIndex = -1;
     for(int i = 0; i < optionsList->size; i++)
     {
         if(strcmp(optionToFind, optionsList->options[i].optionText) == 0)
         {
-            optionFound = true;
+            foundIndex = i;
         }
     }
-    return optionFound;
+    return foundIndex;
 }
 
 bool flagValueForOption(const CommandLineOptionList* optionsList, char* optionToFind)
