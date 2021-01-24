@@ -4,8 +4,8 @@
 
 void exitIfPreviousStepFailed(int previousStepFailed)
 {
-    if(previousStepFailed)
-    {
-        exit(1);
-    }
+   if (previousStepFailed)
+   {
+      exit(1);
+   }
 }
