@@ -6,14 +6,14 @@
 //////////////////////////////////////////////////////////////////////
 //              Private Function Prototypes                         //
 //////////////////////////////////////////////////////////////////////
-int checkType(LinkedList* list, int type);
-int checkIndex(LinkedList* list, int index);
+int checkType(const LinkedList* list, int type);
+int checkIndex(const LinkedList* list, int index);
 
 //////////////////////////////////////////////////////////////////////
 //              Function Implementation Section                     //
 //////////////////////////////////////////////////////////////////////
 
-int checkType(LinkedList* list, int type)
+int checkType(const LinkedList* list, int type)
 {
     if(list->dataType != type)
     {
@@ -24,7 +24,7 @@ int checkType(LinkedList* list, int type)
     return 0;
 }
 
-int checkIndex(LinkedList* list, int index)
+int checkIndex(const LinkedList* list, int index)
 {
     if(index >= list->size && list->size != 0)
     {
@@ -53,17 +53,17 @@ void freeLinkedList(LinkedList* list, void (*freeData)(void *))
     while(itr != 0)
     {
         Node* prev = itr;
+        itr = itr->next;
         (*freeData)(prev->data);
         prev->next = 0;
         free(prev);
-        itr = itr->next;
     }
     list->dataType = 0;
     list->size = 0;
     free(list);
 }
 
-int size_ll(LinkedList* list, int type)
+int size_ll(const LinkedList* list, int type)
 {
     int typeError = checkType(list, type);
     if(!typeError)
@@ -73,7 +73,7 @@ int size_ll(LinkedList* list, int type)
     return -1;
 }
 
-int type_ll(LinkedList* list)
+int type_ll(const LinkedList* list)
 {
     return list->dataType;
 }
@@ -131,7 +131,7 @@ int push_front_ll(LinkedList* list, void* data, int type)
     return insert_ll(list, data, type, 0);
 }
 
-const void* at_ll(LinkedList* list, int type, int index)
+const void* at_ll(const LinkedList* list, int type, int index)
 {
     int typeError = checkType(list, type);
     int indexToCheck = index - 1;
@@ -158,12 +158,12 @@ const void* at_ll(LinkedList* list, int type, int index)
     return NULL;
 }
 
-const void* last_ll(LinkedList* list, int type)
+const void* last_ll(const LinkedList* list, int type)
 {
     return at_ll(list, type, list->size-1);
 }
 
-void printIntegerLinkedList(LinkedList* list, const char* nameOfList)
+void printIntegerLinkedList(const LinkedList* list, const char* nameOfList)
 {
     printf("==============================================\n");
     printf("Printing Linked List - %s\n", nameOfList);

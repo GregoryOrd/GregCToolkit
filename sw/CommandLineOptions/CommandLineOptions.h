@@ -1,14 +1,8 @@
 #ifndef COMMAND_LINE_OPTIONS_H
 #define COMMAND_LINE_OPTIONS_H
 
+#include "CommandLineOptionsStruct.h"
 #include <stdbool.h>
-
-struct CommandLineOption
-{
-    char* optionText;
-    char* description;
-    bool* flagValue;
-} typedef CommandLineOption;
 
 typedef struct CommandLineOptionList
 {
