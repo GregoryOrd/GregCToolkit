@@ -2,6 +2,7 @@
 #define STRING_UTILS_H
 
 void clearString(char* str);
-void reverseString(char* dest, char* src);
+void reverseString(char* dest, const char* src);
+void lowerString(char* dest, const char* src);
 
 #endif

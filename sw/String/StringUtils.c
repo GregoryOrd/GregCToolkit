@@ -1,5 +1,6 @@
 #include "StringUtils.h"
 
+#include <ctype.h>
 #include <string.h>
 
 void clearString(char* str)
@@ -11,7 +12,7 @@ void clearString(char* str)
    }
 }
 
-void reverseString(char* dest, char* src)
+void reverseString(char* dest, const char* src)
 {
    int srcLength = strlen(src);
    int countUp = 0;
@@ -24,4 +25,16 @@ void reverseString(char* dest, char* src)
       }
    }
    dest[countUp] = '\0';
+}
+
+void lowerString(char* dest, const char* src)
+{
+   const char* srcItr = src;
+   char* destItr = dest;
+   while (*srcItr != '\0')
+   {
+      *destItr = tolower(*srcItr);
+      destItr++;
+      srcItr++;
+   }
 }
