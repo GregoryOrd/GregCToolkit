@@ -50,6 +50,14 @@ int checkForOption_ll(const LinkedList* optionsList, char* optionToFind, int typ
    return foundIndex;
 }
 
+void addOptionIfItDoesntAlreadyExist(LinkedList* commandLineOptions, CommandLineOption* option, int type, int index)
+{
+   if (checkForOption_ll(commandLineOptions, option->optionText, type) == -1)
+   {
+      insert_ll(commandLineOptions, option, type, index);
+   }
+}
+
 bool flagValueForOption_ll(const LinkedList* optionsList, char* optionToFind, int type)
 {
    for (int i = 0; i < optionsList->size; i++)
