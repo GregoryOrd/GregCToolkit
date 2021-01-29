@@ -25,7 +25,7 @@ void processCommandLineArgs_ll(int argc, char* argv[], LinkedList* optionsList, 
       {
          CommandLineOption* option = (CommandLineOption*)at_ll(optionsList, type, indexOfOptionInOptionsList);
          bool value = option->flagValue;
-         if (value) option->flagValue = !option->flagValue;
+         option->flagValue = !option->flagValue;
       }
       else
       {
