@@ -35,12 +35,12 @@ void processCommandLineArgs_ll(int argc, const char* argv[], LinkedList* options
    }
 }
 
-int checkForOption_ll(const LinkedList* optionsList, char* optionToFind, int type)
+int checkForOption_ll(const LinkedList* optionsList, const char* optionToFind, int type)
 {
    int foundIndex = -1;
    for (int i = 0; i < optionsList->size; i++)
    {
-      CommandLineOption* option = (CommandLineOption*)at_ll(optionsList, type, i);
+      const CommandLineOption* option = (CommandLineOption*)at_ll(optionsList, type, i);
       if (strcmp(optionToFind, option->optionText) == 0)
       {
          foundIndex = i;
@@ -57,7 +57,7 @@ void addOptionIfItDoesntAlreadyExist(LinkedList* commandLineOptions, CommandLine
    }
 }
 
-bool flagValueForOption_ll(const LinkedList* optionsList, char* optionToFind, int type)
+bool flagValueForOption_ll(const LinkedList* optionsList, const char* optionToFind, int type)
 {
    for (int i = 0; i < optionsList->size; i++)
    {

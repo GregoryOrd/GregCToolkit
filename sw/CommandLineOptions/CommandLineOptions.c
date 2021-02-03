@@ -51,7 +51,7 @@ void processCommandLineArgs(int argc, char* argv[], CommandLineOptionList* optio
    }
 }
 
-int checkForOption(const CommandLineOptionList* optionsList, char* optionToFind)
+int checkForOption(const CommandLineOptionList* optionsList, const char* optionToFind)
 {
    int foundIndex = -1;
    for (int i = 0; i < optionsList->size; i++)
@@ -64,7 +64,7 @@ int checkForOption(const CommandLineOptionList* optionsList, char* optionToFind)
    return foundIndex;
 }
 
-bool flagValueForOption(const CommandLineOptionList* optionsList, char* optionToFind)
+bool flagValueForOption(const CommandLineOptionList* optionsList, const char* optionToFind)
 {
    for (int i = 0; i < optionsList->size; i++)
    {

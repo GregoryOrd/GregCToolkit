@@ -17,8 +17,8 @@ typedef struct CommandLineOptionList
 void initCommandLineOptions(CommandLineOptionList* options, int size);
 void freeCommandLineOptions(CommandLineOptionList* options);
 void processCommandLineArgs(int arc, char* argv[], CommandLineOptionList* options);
-int checkForOption(const CommandLineOptionList* optionsList, char* optionToFind);
+int checkForOption(const CommandLineOptionList* optionsList, const char* optionToFind);
 void printSupportedOptions(const CommandLineOptionList* supportedOptions);
-bool flagValueForOption(const CommandLineOptionList* optionsList, char* optionToFind);
+bool flagValueForOption(const CommandLineOptionList* optionsList, const char* optionToFind);
 
 #endif
