@@ -40,6 +40,7 @@ int type_ll(const LinkedList* list);
 int insert_ll(LinkedList* list, void* data, int type, int index);
 int append_ll(LinkedList* list, void* data, int type);
 int push_front_ll(LinkedList* list, void* data, int type);
+int setAt_ll(LinkedList* list, void* data, int type, int index);
 
 // These functions will return a null pointer on failure
 const void* at_ll(const LinkedList* list, int type, int index);

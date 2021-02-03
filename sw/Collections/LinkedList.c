@@ -121,6 +121,34 @@ int append_ll(LinkedList* list, void* data, int type) { return insert_ll(list, d
 
 int push_front_ll(LinkedList* list, void* data, int type) { return insert_ll(list, data, type, 0); }
 
+int setAt_ll(LinkedList* list, void* data, int type, int index)
+{
+   int typeError = checkType(list, type);
+   int indexToCheck = index - 1;
+   if (indexToCheck < 0)
+   {
+      indexToCheck = 0;
+   }
+   int indexError = checkIndex(list, index);
+   if (!typeError && !indexError)
+   {
+      Node* currentPtr = list->head;
+      int i = 0;
+      while (currentPtr != 0 && i < index)
+      {
+         i++;
+         if (i > 0)
+         {
+            currentPtr = currentPtr->next;
+         }
+      }
+
+      currentPtr->data = data;
+      return 0;
+   }
+   return 1;
+}
+
 const void* at_ll(const LinkedList* list, int type, int index)
 {
    int typeError = checkType(list, type);

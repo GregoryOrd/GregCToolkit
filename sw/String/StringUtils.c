@@ -1,6 +1,7 @@
 #include "StringUtils.h"
 
 #include <ctype.h>
+#include <stdlib.h>
 #include <string.h>
 
 void clearString(char* str)
@@ -36,5 +37,20 @@ void lowerString(char* dest, const char* src)
       *destItr = tolower(*srcItr);
       destItr++;
       srcItr++;
+   }
+}
+
+void removeTrailingNewLine(char* str)
+{
+   int size = strlen(str);
+   if (str[size - 1] == '\n')
+   {
+      char* temp = (char*)malloc(size - 1);
+      for (int i = 0; i < size - 2; i++)
+      {
+         temp[i] = str[i];
+      }
+      strncpy(str, temp, size - 1);
+      free(temp);
    }
 }
