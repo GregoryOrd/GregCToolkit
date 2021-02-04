@@ -13,7 +13,6 @@ void freeCommandLineOption(void* data)
    CommandLineOption* option = (CommandLineOption*)data;
    free(option->optionText);
    free(option->description);
-   free(option->flagValue);
    free(option);
 }
 
@@ -25,7 +24,7 @@ void processCommandLineArgs_ll(int argc, const char* argv[], LinkedList* options
       if (indexOfOptionInOptionsList > -1)
       {
          CommandLineOption* option = (CommandLineOption*)at_ll(optionsList, type, indexOfOptionInOptionsList);
-         *option->flagValue = !*option->flagValue;
+         option->flagValue = !option->flagValue;
       }
       else
       {

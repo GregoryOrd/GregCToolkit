@@ -14,11 +14,10 @@ void initCommandLineOptions(CommandLineOptionList* list, int size)
    {
       list->options[i].description = (char*)malloc(sizeof(char*));
       list->options[i].optionText = (char*)malloc(sizeof(char*));
-      list->options[i].flagValue = (bool*)malloc(sizeof(bool*));
 
       strcpy(list->options[i].description, NULL_COMMAND_LINE_DESCRIPTION);
       strcpy(list->options[i].optionText, NULL_COMMAND_LINE_OPTION_TEXT);
-      *list->options[i].flagValue = NULL_COMMAND_LINE_FLAG_VALUE;
+      list->options[i].flagValue = NULL_COMMAND_LINE_FLAG_VALUE;
    }
 }
 
@@ -28,7 +27,6 @@ void freeCommandLineOptions(CommandLineOptionList* list)
    {
       free(&list->options[i].description);
       free(&list->options[i].optionText);
-      free(&list->options[i].flagValue);
    }
    free(list);
 }
@@ -40,7 +38,7 @@ void processCommandLineArgs(int argc, char* argv[], CommandLineOptionList* optio
       int indexOfOptionInOptionsList = checkForOption(optionsList, argv[i]);
       if (indexOfOptionInOptionsList > -1)
       {
-         *optionsList->options[indexOfOptionInOptionsList].flagValue = !(*optionsList->options[indexOfOptionInOptionsList].flagValue);
+         optionsList->options[indexOfOptionInOptionsList].flagValue = !optionsList->options[indexOfOptionInOptionsList].flagValue;
       }
       else
       {
@@ -70,7 +68,7 @@ bool flagValueForOption(const CommandLineOptionList* optionsList, const char* op
    {
       if (strcmp(optionToFind, optionsList->options[i].optionText) == 0)
       {
-         return *optionsList->options[i].flagValue;
+         return optionsList->options[i].flagValue;
       }
    }
    return true;

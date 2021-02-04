@@ -11,7 +11,7 @@ struct CommandLineOption
 {
     char* optionText;
     char* description;
-    bool* flagValue;
+    bool flagValue;
 } typedef CommandLineOption;
 
 #endif
