@@ -12,8 +12,8 @@ void freeCommandLineOption(void* data)
 {
    CommandLineOption* option = (CommandLineOption*)data;
    free(option->optionText);
-   // free(option->description);
-   // free(option->flagValue);
+   free(option->description);
+   free(option->flagValue);
    free(option);
 }
 
