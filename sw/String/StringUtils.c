@@ -45,7 +45,7 @@ void removeTrailingNewLine(char* str)
    int size = strlen(str);
    if (str[size - 1] == '\n')
    {
-      char* temp = (char*)malloc(size - 1);
+      char* temp = malloc(size - 1);
       for (int i = 0; i < size - 2; i++)
       {
          temp[i] = str[i];

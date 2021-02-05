@@ -96,7 +96,7 @@ int insert_ll(LinkedList* list, void* data, int type, int index)
          }
       }
 
-      Node* newNode = (Node*)malloc(sizeof(Node));
+      Node* newNode = malloc(sizeof(Node));
       newNode->data = data;
       newNode->next = 0;
 

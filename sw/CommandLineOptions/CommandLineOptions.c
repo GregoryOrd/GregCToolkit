@@ -8,12 +8,12 @@
 void initCommandLineOptions(CommandLineOptionList* list, int size)
 {
    list->size = size;
-   list->options = (CommandLineOption*)malloc(size * sizeof(CommandLineOption));
+   list->options = malloc(size * sizeof(CommandLineOption));
 
    for (int i = 0; i < size; i++)
    {
-      list->options[i].description = (char*)malloc(sizeof(char*));
-      list->options[i].optionText = (char*)malloc(sizeof(char*));
+      list->options[i].description = malloc(sizeof(char*));
+      list->options[i].optionText = malloc(sizeof(char*));
 
       strcpy(list->options[i].description, NULL_COMMAND_LINE_DESCRIPTION);
       strcpy(list->options[i].optionText, NULL_COMMAND_LINE_OPTION_TEXT);
