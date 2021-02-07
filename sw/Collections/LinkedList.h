@@ -25,6 +25,10 @@ typedef struct LinkedList
     Node* head;
 } LinkedList;
 
+#ifdef __cplusplus
+extern "C" {
+#endif  
+
 //This function assumes the linked list has already been allocated memory dynamically
 void initEmptyLinkedList(LinkedList* list, int type);
 //Takes care of freeing the linked list and all data inside it, even if the memory
@@ -49,5 +53,9 @@ const void* last_ll(const LinkedList* list, int type);
 // Functions can be added here to print linked list for all basic types
 // For custom structs, a similar function must live outside of the toolkit
 void printIntegerLinkedList(const LinkedList* list, const char* nameOfList);
+
+#ifdef __cplusplus
+}
+#endif  
 
 #endif
