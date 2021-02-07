@@ -4,7 +4,7 @@
 typedef struct ArgList
 {
     int size;
-    char** args;
+    void** args;
 } ArgList;
 
 #endif
