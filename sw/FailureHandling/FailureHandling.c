@@ -2,9 +2,9 @@
 
 #include <stdlib.h>
 
-void exitIfPreviousStepFailed(int previousStepFailed)
+void exitIfError(int error)
 {
-   if (previousStepFailed)
+   if (error)
    {
       exit(1);
    }

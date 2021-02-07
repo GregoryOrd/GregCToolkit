@@ -5,7 +5,7 @@
 extern "C" {
 #endif  
 
-void exitIfPreviousStepFailed(int previousStepFailed);
+void exitIfError(int error);
 
 #ifdef __cplusplus
 }
