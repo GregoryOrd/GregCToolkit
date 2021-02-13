@@ -1,7 +1,9 @@
 #include "LinkedList.h"
 
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 //////////////////////////////////////////////////////////////////////
 //              Private Function Prototypes                         //
@@ -76,6 +78,13 @@ int type_ll(const LinkedList* list) { return list->dataType; }
 
 int insert_ll(LinkedList* list, void* data, int type, int index)
 {
+   bool uninitializedList = (list == NULL);
+   if (uninitializedList)
+   {
+      list = malloc(sizeof(LinkedList));
+      initEmptyLinkedList(list, type);
+   }
+
    int typeError = checkType(list, type);
    int indexToCheck = index - 1;
    if (indexToCheck < 0)
@@ -117,7 +126,52 @@ int insert_ll(LinkedList* list, void* data, int type, int index)
    return 1;
 }
 
+int insert_string_ll(LinkedList* list, char* data, int type, int index)
+{
+   int typeError = checkType(list, type);
+   int indexToCheck = index - 1;
+   if (indexToCheck < 0)
+   {
+      indexToCheck = 0;
+   }
+   int indexError = checkIndex(list, indexToCheck);
+   if (!typeError && !indexError)
+   {
+      Node* currentPtr = list->head;
+      int i = 0;
+      while (currentPtr != 0 && i < index)
+      {
+         i++;
+         if (i > 1)
+         {
+            currentPtr = currentPtr->next;
+         }
+      }
+
+      Node* newNode = malloc(sizeof(Node));
+      newNode->data = malloc(strlen(data));
+      strcpy(newNode->data, data);
+      newNode->next = 0;
+
+      if (i == 0)
+      {
+         newNode->next = list->head;
+         list->head = newNode;
+      }
+      else
+      {
+         newNode->next = currentPtr->next;
+         currentPtr->next = newNode;
+      }
+
+      list->size++;
+      return 0;
+   }
+   return 1;
+}
+
 int append_ll(LinkedList* list, void* data, int type) { return insert_ll(list, data, type, list->size); }
+int append_string_ll(LinkedList* list, char* data, int type) { return insert_string_ll(list, data, type, list->size); }
 
 int push_front_ll(LinkedList* list, void* data, int type) { return insert_ll(list, data, type, 0); }
 

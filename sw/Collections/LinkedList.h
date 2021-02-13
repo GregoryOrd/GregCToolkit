@@ -41,8 +41,12 @@ int type_ll(const LinkedList* list);
 
 // These functions will return 1 on failure, 0 on success
 // This function assumes the linked list and data have already been allocated memory dynamically
+// The only difference between insert_ll/append_ll and insert_string_ll/append_string_ll
+// is that the data is copied using strcpy rather than adjusting a pointer
 int insert_ll(LinkedList* list, void* data, int type, int index);
+int insert_string_ll(LinkedList* list, char* data, int type, int index);
 int append_ll(LinkedList* list, void* data, int type);
+int append_string_ll(LinkedList* list, char* data, int type);
 int push_front_ll(LinkedList* list, void* data, int type);
 int setAt_ll(LinkedList* list, void* data, int type, int index);
 
