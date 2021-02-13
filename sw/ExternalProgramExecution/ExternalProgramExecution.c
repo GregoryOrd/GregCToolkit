@@ -1,46 +1,44 @@
 #include "ExternalProgramExecution.h"
 
+#include <errno.h>
 #include <process.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/types.h> /* for pid_t */
 
-#ifdef __unix__
-#include <sys/wait.h> /* for wait */
-#include <unistd.h>   /* for fork */
-#endif
-
-#ifdef __WIN32__
-#include <process.h>
-#endif
-
-int forkAndRunChildProcess(const char* pathToExecutable, char* const argv[])
+int forkAndRunChildProcess(const char* pathToExecutable, int argc, char* const argv[])
 {
-   int status;
-#ifdef __unix__
-   /*Spawn a child to run the program.*/
-   pid_t pid = fork();
-   if (pid == 0)
-   { /* child process */
-      execv(pathToExecutable, argv);
-      exit(1); /* only if execv fails */
-   }
-   else
-   { /* pid!=0; parent process */
-      int status;
-      waitpid(pid, &status, 0); /* wait for child to exit */
-      if (WIFEXITED(status))
+   int sizeOfCommandText = strlen(pathToExecutable);
+   for (int i = 1; i < argc; i++)
+   {
+      if (argv[i] != NULL)
       {
-         return WEXITSTATUS(status);
+         sizeOfCommandText += (strlen(argv[i]) + 1);
       }
    }
-#endif
+   sizeOfCommandText++;
 
-#ifdef __WIN32__
-   status = spawnv(P_WAIT, pathToExecutable, argv);
-   if (WIFEXITED(status))
+   char* commandText = calloc(sizeOfCommandText, sizeof(char));
+   strcpy(commandText, pathToExecutable);
+   for (int i = 1; i < argc; i++)
    {
-      return WEXITSTATUS(status);
+      if (argv[i] != NULL)
+      {
+         strcat(commandText, " ");
+         strcat(commandText, argv[i]);
+      }
    }
-#endif
+   printf("%s\n", commandText);
+
+   FILE* rd;
+   char buffer[4080];
+   rd = popen(commandText, "r");
+   if (strlen((char*)rd) > 0)
+   {
+      printf("%s\n", rd);
+   }
+   int status = pclose(rd);
+   free(commandText);
+   return WEXITSTATUS(status);
 }

@@ -5,7 +5,7 @@
 extern "C" {
 #endif  
 
-int forkAndRunChildProcess(const char * pathToExecutable, char * const argv[]);
+int forkAndRunChildProcess(const char * pathToExecutable, int argc, char * const argv[]);
 
 #ifdef __cplusplus
 }
