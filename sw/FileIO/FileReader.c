@@ -17,9 +17,11 @@ int readFileWithActionAfterEachLine(const char* pathToTestFile, ArgList* argList
       while (fgets(buffer, MAX_LINE_LENGTH, (FILE*)filePtr) != NULL)
       {
          removeTrailingNewLine(buffer);
+         removeTrailingReturnCarriage(buffer);
          addBufferToEndOfArgList(argList, buffer);
          error = action(argList);
          removeLastElementFromArgList(argList);
+         clearString(buffer);
          if (error)
          {
             break;
@@ -38,8 +40,8 @@ int readFileWithActionAfterEachLine(const char* pathToTestFile, ArgList* argList
 void addBufferToEndOfArgList(ArgList* list, char* buffer)
 {
    list->args = (void**)realloc(list->args, ((list->size + 1) * sizeof(void*)));
-   list->args[list->size] = malloc(sizeof(char*));
-   strncpy((char*)list->args[list->size], buffer, strlen(buffer));
+   list->args[list->size] = calloc(sizeof(buffer), sizeof(char));
+   strcpy((char*)list->args[list->size], buffer);
    list->size++;
 }
 

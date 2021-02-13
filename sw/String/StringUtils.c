@@ -45,12 +45,15 @@ void removeTrailingNewLine(char* str)
    int size = strlen(str);
    if (str[size - 1] == '\n')
    {
-      char* temp = malloc(size - 1);
-      for (int i = 0; i < size - 2; i++)
-      {
-         temp[i] = str[i];
-      }
-      strncpy(str, temp, size - 1);
-      free(temp);
+      str[size - 1] = '\0';
+   }
+}
+
+void removeTrailingReturnCarriage(char* str)
+{
+   int size = strlen(str);
+   if (str[size - 1] == '\r')
+   {
+      str[size - 1] = '\0';
    }
 }
