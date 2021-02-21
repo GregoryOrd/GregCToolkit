@@ -149,7 +149,7 @@ int insert_string_ll(LinkedList* list, char* data, int type, int index)
       }
 
       Node* newNode = malloc(sizeof(Node));
-      newNode->data = calloc(strlen(data), sizeof(char));
+      newNode->data = calloc(strlen(data) + 1, sizeof(char));
       strcpy(newNode->data, data);
       newNode->next = 0;
 
