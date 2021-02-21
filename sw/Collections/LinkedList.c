@@ -35,7 +35,7 @@ int checkIndex(const LinkedList* list, int index)
 
    if (index < 0)
    {
-      printf("Linked List Index Out of Bounds. Can not access index less than or equal to zero.\n", index, list->size);
+      printf("Linked List Index Out of Bounds. Can not access index less than or equal to zero.\n");
       return 1;
    }
    return 0;

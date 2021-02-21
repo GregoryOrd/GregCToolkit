@@ -34,7 +34,8 @@ void lowerString(char* dest, const char* src)
    char* destItr = dest;
    while (*srcItr != '\0')
    {
-      *destItr = tolower(*srcItr);
+      char c = *srcItr;
+      *destItr = tolower(c);
       destItr++;
       srcItr++;
    }
