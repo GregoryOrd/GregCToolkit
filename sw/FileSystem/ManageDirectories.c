@@ -10,7 +10,7 @@
 int makeDir(char* dirName)
 {
    char* const argv[] = {mkdir, dirName, "-p", NULL};
-   return forkAndRunChildProcess(4, argv);
+   return popenChildProcess(4, argv);
 }
 
 int removeDir(char* folderName)

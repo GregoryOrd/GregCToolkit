@@ -39,7 +39,7 @@ int readFileWithActionAfterEachLine(const char* pathToTestFile, ArgList* argList
 
 void addBufferToEndOfArgList(ArgList* list, char* buffer)
 {
-   list->args = (void**)realloc(list->args, ((list->size + 1) * sizeof(void*)));
+   list->args = realloc(list->args, ((list->size + 1) * sizeof(void*)));
    list->args[list->size] = calloc(strlen(buffer) + 1, sizeof(char));
    strcpy((char*)list->args[list->size], buffer);
    list->size++;
