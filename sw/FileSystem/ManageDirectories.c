@@ -10,13 +10,13 @@
 int makeDir(char* dirName)
 {
    char* const argv[] = {mkdir, dirName, "-p", NULL};
-   return popenChildProcess(4, argv);
+   return forkAndRunChildProcess(4, argv);
 }
 
 int removeDir(char* folderName)
 {
    char* const argv[] = {rm, folderName, "-r", NULL};
-   return popenChildProcess(4, argv);
+   return forkAndRunChildProcess(4, argv);
 }
 
 bool isVisibleDirectory(const struct dirent* fileOrSubDirectory)
