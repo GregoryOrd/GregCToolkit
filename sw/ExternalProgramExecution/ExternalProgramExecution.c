@@ -15,17 +15,58 @@
 
 int popenChildProcess(int argc, char* const argv[])
 {
-   int sizeOfCommandText = strlen(argv[0]);
-   for (int i = 1; i < argc; i++)
-   {
-      if (argv[i] != NULL)
-      {
-         sizeOfCommandText += (strlen(argv[i]) + 1);
-      }
-   }
-   sizeOfCommandText++;
-
    char commandText[255] = "";
+   getCommandText(commandText, argc, argv);
+   printf("%s\n", commandText);
+
+   FILE* rd = NULL;
+   rd = popen(commandText, "r");
+   int status = pclose(rd);
+   return WEXITSTATUS(status);
+}
+
+int forkAndRunChildProcess(char* const argv[])
+{
+#ifdef __WINDOWS__
+   return forkAndRunChildProcess_windows(argv);
+#else
+   return forkAndRunChildProcess_linux(argv);
+#endif
+}
+
+#ifdef __WIDNOWS__
+int forkAndRunChildProcess_windows(char* const argv[])
+{
+   int status = spawnv(P_WAIT, argv[0], argv);
+   if (WIFEXITED(status))
+   {
+      return WEXITSTATUS(status);
+   }
+}
+#else
+int forkAndRunChildProcess_linux(char* const argv[])
+{
+   int status = 0;
+   pid_t pid;
+   int ret = 1;
+   pid = fork();
+
+   if (pid == 0)
+   {
+      // child process
+      executeAndExit(argv);
+   }
+   else
+   {
+      // parent process
+      return waitAndExit(pid, status);
+   }
+   return 1;
+}
+#endif
+
+void getCommandText(char* commandText, int argc, char* const argv[])
+{
    strcpy(commandText, argv[0]);
    for (int i = 1; i < argc; i++)
    {
@@ -35,47 +76,21 @@ int popenChildProcess(int argc, char* const argv[])
          strcat(commandText, argv[i]);
       }
    }
-   printf("%s\n", commandText);
-
-   FILE* rd = NULL;
-   rd = popen(commandText, "r");
-   int status = pclose(rd);
-   return WEXITSTATUS(status);
 }
 
-int forkAndRunChildProcess(int argc, char* const argv[])
+void executeAndExit(char* const argv[])
 {
-   int status;
-#ifdef __WINDOWS__
-   status = spawnv(P_WAIT, pathToExecutable, argv);
-   if (WIFEXITED(status))
-   {
-      return WEXITSTATUS(status);
-   }
-#else
-   pid_t pid;
-   int ret = 1;
-   pid = fork();
+   execvp(argv[0], argv);  // If execv returns, there was an error
+   exit(0);
+}
 
-   if (pid == 0)
+int waitAndExit(pid_t pid, int status)
+{
+   if (waitpid(pid, &status, 0) > 0)
    {
-      // child process
-      execvp(argv[0], argv);
-
-      // If execv returns, there was an error
-      exit(0);
-   }
-   else
-   {
-      // parent process
-      if (waitpid(pid, &status, 0) > 0)
+      if (WIFEXITED(status) && !WEXITSTATUS(status))
       {
-         if (WIFEXITED(status) && !WEXITSTATUS(status))
-         {
-            return WEXITSTATUS(status);
-         }
+         return WEXITSTATUS(status);
       }
    }
-   return 1;
-#endif
 }
