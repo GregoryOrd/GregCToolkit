@@ -14,52 +14,53 @@
 
 typedef struct Node
 {
-    void* data;
-    struct Node* next;
+   void* data;
+   struct Node* next;
 } Node;
 
 typedef struct LinkedList
 {
-    int dataType;
-    int size;
-    Node* head;
+   int dataType;
+   int size;
+   Node* head;
 } LinkedList;
 
 #ifdef __cplusplus
-extern "C" {
-#endif  
+extern "C"
+{
+#endif
 
-//This function assumes the linked list has already been allocated memory dynamically
-void initEmptyLinkedList(LinkedList* list, int type);
-//Takes care of freeing the linked list and all data inside it, even if the memory
-//was originally allocated outside of the linked list
-void freeLinkedList(LinkedList* list, void(*freeData)(void*));
+   // This function assumes the linked list has already been allocated memory dynamically
+   void initEmptyLinkedList(LinkedList* list, int type);
+   // Takes care of freeing the linked list and all data inside it, even if the memory
+   // was originally allocated outside of the linked list
+   void freeLinkedList(LinkedList* list, void (*freeData)(void*));
 
-// These functions will return -1 on failure
-int size_ll(const LinkedList* list, int type);
-int type_ll(const LinkedList* list);
+   // These functions will return -1 on failure
+   int size_ll(const LinkedList* list, int type);
+   int type_ll(const LinkedList* list);
 
-// These functions will return 1 on failure, 0 on success
-// This function assumes the linked list and data have already been allocated memory dynamically
-// The only difference between insert_ll/append_ll and insert_string_ll/append_string_ll
-// is that the data is copied using strcpy rather than adjusting a pointer
-int insert_ll(LinkedList* list, void* data, int type, int index);
-int insert_string_ll(LinkedList* list, char* data, int type, int index);
-int append_ll(LinkedList* list, void* data, int type);
-int append_string_ll(LinkedList* list, char* data, int type);
-int push_front_ll(LinkedList* list, void* data, int type);
-int setAt_ll(LinkedList* list, void* data, int type, int index);
+   // These functions will return 1 on failure, 0 on success
+   // This function assumes the linked list and data have already been allocated memory dynamically
+   // The only difference between insert_ll/append_ll and insert_string_ll/append_string_ll
+   // is that the data is copied using strcpy rather than adjusting a pointer
+   int insert_ll(LinkedList* list, void* data, int type, int index);
+   int insert_string_ll(LinkedList* list, const char* data, int type, int index);
+   int append_ll(LinkedList* list, void* data, int type);
+   int append_string_ll(LinkedList* list, const char* data, int type);
+   int push_front_ll(LinkedList* list, void* data, int type);
+   int setAt_ll(LinkedList* list, void* data, int type, int index);
 
-// These functions will return a null pointer on failure
-const void* at_ll(const LinkedList* list, int type, int index);
-const void* last_ll(const LinkedList* list, int type);
+   // These functions will return a null pointer on failure
+   const void* at_ll(const LinkedList* list, int type, int index);
+   const void* last_ll(const LinkedList* list, int type);
 
-// Functions can be added here to print linked list for all basic types
-// For custom structs, a similar function must live outside of the toolkit
-void printIntegerLinkedList(const LinkedList* list, const char* nameOfList);
+   // Functions can be added here to print linked list for all basic types
+   // For custom structs, a similar function must live outside of the toolkit
+   void printIntegerLinkedList(const LinkedList* list, const char* nameOfList);
 
 #ifdef __cplusplus
 }
-#endif  
+#endif
 
 #endif
