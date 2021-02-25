@@ -4,7 +4,7 @@
 
 #include "HashTable.h"
 #define NUM_PARAMS   8
-#define TABLE_SIZE   10
+#define TABLE_SIZE   5
 #define INTEGER_TYPE 1
 
 void freeIntegerType(void* intPtr);

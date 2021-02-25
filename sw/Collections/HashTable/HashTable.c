@@ -72,11 +72,15 @@ void* hash_lookup(const HashTable* table, const char* key, int type)
    if (!typeError)
    {
       unsigned int index = hash(key, table->size);
-      if (table->items[index] != NULL)
+      for (int i = 0; i < table->size; i++)
       {
-         if (strcmp(table->items[index]->key, key) == 0)
+         int indexToTry = (i + index) % table->size;
+         if (table->items[indexToTry] != NULL)
          {
-            return table->items[index]->data;
+            if (strcmp(table->items[indexToTry]->key, key) == 0)
+            {
+               return table->items[indexToTry]->data;
+            }
          }
       }
    }
@@ -89,10 +93,14 @@ bool hash_insert(HashTable* table, HashTableItem* item, int type)
    if (!typeError)
    {
       unsigned int index = hash(item->key, table->size);
-      if (table->items[index] == NULL)
+      for (int i = 0; i < table->size; i++)
       {
-         table->items[index] = item;
-         return true;
+         int indexToTry = (i + index) % table->size;
+         if (table->items[indexToTry] == NULL)
+         {
+            table->items[indexToTry] = item;
+            return true;
+         }
       }
    }
 
@@ -105,13 +113,17 @@ HashTableItem* hash_remove(HashTable* table, const char* key, int type)
    if (!typeError)
    {
       unsigned int index = hash(key, table->size);
-      if (table->items[index] != NULL)
+      for (int i = 0; i < table->size; i++)
       {
-         if (strcmp(table->items[index]->key, key) == 0)
+         int indexToTry = (i + index) % table->size;
+         if (table->items[indexToTry] != NULL)
          {
-            HashTableItem* temp = table->items[index];
-            table->items[index] = NULL;
-            return temp;
+            if (strcmp(table->items[indexToTry]->key, key) == 0)
+            {
+               HashTableItem* temp = table->items[indexToTry];
+               table->items[indexToTry] = NULL;
+               return temp;
+            }
          }
       }
    }
