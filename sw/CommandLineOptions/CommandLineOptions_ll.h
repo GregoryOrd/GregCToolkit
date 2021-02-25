@@ -2,7 +2,7 @@
 #define COMMAND_LINE_OPTIONS_LL_H
 
 #include "CommandLineOptionsStruct.h"
-#include "../Collections/LinkedList.h"
+#include "../Collections/LinkedList/LinkedList.h"
 #include <stdbool.h>
 
 #ifdef __cplusplus

@@ -1,0 +1,109 @@
+#include "HashTable.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+//////////////////////////////////////////////////////////////////////
+//              Private Function Prototypes                         //
+//////////////////////////////////////////////////////////////////////
+unsigned int hash(const char* key, unsigned int tableSize);
+int checkType(const HashTable* table, int type);
+
+//////////////////////////////////////////////////////////////////////
+//              Function Implementation Section                     //
+//////////////////////////////////////////////////////////////////////
+unsigned int hash(const char* key, unsigned int tableSize)
+{
+   int length = strlen(key);
+   unsigned int value = 0;
+   for (int i = 0; i < length; i++)
+   {
+      value += key[i];
+      value = (value * key[i]) % tableSize;
+   }
+   return value;
+}
+
+int checkType(const HashTable* table, int type)
+{
+   if (table->type != type)
+   {
+      printf("Hash Table Type Error. Can not use type: %d for Hash Table of type: %d\n", type, table->type);
+      return 1;
+   }
+   return 0;
+}
+
+void initHashTable(HashTable* table, int type, int size)
+{
+   HashTableItem* tableData = calloc(sizeof(HashTableItem), size);
+   table->type = type;
+   table->size = size;
+   table->items = tableData;
+}
+
+void freeHashTable(HashTable* table, void (*freeData)(void*))
+{
+   for (int i = 0; i < table->size; i++)
+   {
+      freeData(&table->items[i]);
+   }
+   free(table->items);
+   free(table);
+}
+
+void* hash_lookup(const HashTable* table, const char* key, int type)
+{
+   int typeError = checkType(table, type);
+   if (!typeError)
+   {
+      unsigned int index = hash(key, table->size);
+      if (table->items[index].key != NULL && table->items[index].data != NULL)
+      {
+         if (strcmp(table->items[index].key, key) == 0)
+         {
+            return table->items[index].data;
+         }
+      }
+   }
+   return NULL;
+}
+
+bool hash_insert(HashTable* table, HashTableItem* item, int type)
+{
+   int typeError = checkType(table, type);
+   if (!typeError)
+   {
+      unsigned int index = hash(item->key, table->size);
+      if (table->items[index].data == NULL)
+      {
+         table->items[index].data = item->data;
+         table->items[index].key = item->key;
+         return true;
+      }
+   }
+
+   return false;
+}
+
+int hash_type(const HashTable* table) { return table->type; }
+
+void printIntegerHashTable(const HashTable* table, const char* nameOfTable)
+{
+   printf("==============================================\n");
+   printf("Printing Hash Table - %s\n", nameOfTable);
+   printf("==============================================\n");
+   printf("Size: %d\n", table->size);
+   for (int i = 0; i < table->size; i++)
+   {
+      if (table->items[i].key != NULL)
+      {
+         printf("Table[%d]: (%s, %d)\n", i, table->items[i].key, *(int*)table->items[i].data);
+      }
+      else
+      {
+         printf("Table[%d]: NULL\n", i);
+      }
+   }
+}
