@@ -8,14 +8,14 @@
 //////////////////////////////////////////////////////////////////////
 //              Private Function Prototypes                         //
 //////////////////////////////////////////////////////////////////////
-int checkType(const LinkedList* list, int type);
+int checkLinkedListType(const LinkedList* list, int type);
 int checkIndex(const LinkedList* list, int index);
 
 //////////////////////////////////////////////////////////////////////
 //              Function Implementation Section                     //
 //////////////////////////////////////////////////////////////////////
 
-int checkType(const LinkedList* list, int type)
+int checkLinkedListType(const LinkedList* list, int type)
 {
    if (list->dataType != type)
    {
@@ -66,7 +66,7 @@ void freeLinkedList(LinkedList* list, void (*freeData)(void*))
 
 int size_ll(const LinkedList* list, int type)
 {
-   int typeError = checkType(list, type);
+   int typeError = checkLinkedListType(list, type);
    if (!typeError)
    {
       return list->size;
@@ -85,7 +85,7 @@ int insert_ll(LinkedList* list, void* data, int type, int index)
       initEmptyLinkedList(list, type);
    }
 
-   int typeError = checkType(list, type);
+   int typeError = checkLinkedListType(list, type);
    int indexToCheck = index - 1;
    if (indexToCheck < 0)
    {
@@ -128,7 +128,7 @@ int insert_ll(LinkedList* list, void* data, int type, int index)
 
 int insert_string_ll(LinkedList* list, const char* data, int type, int index)
 {
-   int typeError = checkType(list, type);
+   int typeError = checkLinkedListType(list, type);
    int indexToCheck = index - 1;
    if (indexToCheck < 0)
    {
@@ -173,11 +173,19 @@ int insert_string_ll(LinkedList* list, const char* data, int type, int index)
 int append_ll(LinkedList* list, void* data, int type) { return insert_ll(list, data, type, list->size); }
 int append_string_ll(LinkedList* list, const char* data, int type) { return insert_string_ll(list, data, type, list->size); }
 
+int append_string_voidArgs_ll(void** args)
+{
+   LinkedList* list = (LinkedList*)args[0];
+   const char* data = (const char*)args[1];
+   int* type = (int*)args[2];
+   return append_string_ll(list, data, *type);
+}
+
 int push_front_ll(LinkedList* list, void* data, int type) { return insert_ll(list, data, type, 0); }
 
 int setAt_ll(LinkedList* list, void* data, int type, int index)
 {
-   int typeError = checkType(list, type);
+   int typeError = checkLinkedListType(list, type);
    int indexToCheck = index - 1;
    if (indexToCheck < 0)
    {
@@ -205,7 +213,7 @@ int setAt_ll(LinkedList* list, void* data, int type, int index)
 
 const void* at_ll(const LinkedList* list, int type, int index)
 {
-   int typeError = checkType(list, type);
+   int typeError = checkLinkedListType(list, type);
    int indexToCheck = index - 1;
    if (indexToCheck < 0)
    {

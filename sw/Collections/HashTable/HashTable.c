@@ -10,7 +10,7 @@
 //              Private Function Prototypes                         //
 //////////////////////////////////////////////////////////////////////
 unsigned int hash(const char* key, unsigned int tableSize);
-int checkType(const HashTable* table, int type);
+int checkHashTableType(const HashTable* table, int type);
 
 //////////////////////////////////////////////////////////////////////
 //              Function Implementation Section                     //
@@ -27,7 +27,7 @@ unsigned int hash(const char* key, unsigned int tableSize)
    return value;
 }
 
-int checkType(const HashTable* table, int type)
+int checkHashTableType(const HashTable* table, int type)
 {
    if (table->type != type)
    {
@@ -70,7 +70,7 @@ void freeHashTable(HashTable* table, void (*freeData)(void*), bool keysOnHeap, b
 
 void* hash_lookup(const HashTable* table, const char* key, int type)
 {
-   int typeError = checkType(table, type);
+   int typeError = checkHashTableType(table, type);
    if (!typeError)
    {
       unsigned int index = hash(key, table->size);
@@ -99,7 +99,7 @@ void* hash_lookup(const HashTable* table, const char* key, int type)
 
 bool hash_insert(HashTable* table, HashTableItem* item, int type)
 {
-   int typeError = checkType(table, type);
+   int typeError = checkHashTableType(table, type);
    if (!typeError)
    {
       unsigned int index = hash(item->key, table->size);
@@ -119,7 +119,7 @@ bool hash_insert(HashTable* table, HashTableItem* item, int type)
 
 HashTableItem* hash_remove(HashTable* table, const char* key, int type)
 {
-   int typeError = checkType(table, type);
+   int typeError = checkHashTableType(table, type);
    if (!typeError)
    {
       unsigned int index = hash(key, table->size);

@@ -48,6 +48,7 @@ extern "C"
    int insert_string_ll(LinkedList* list, const char* data, int type, int index);
    int append_ll(LinkedList* list, void* data, int type);
    int append_string_ll(LinkedList* list, const char* data, int type);
+   int append_string_voidArgs_ll(void** args);
    int push_front_ll(LinkedList* list, void* data, int type);
    int setAt_ll(LinkedList* list, void* data, int type, int index);
 
