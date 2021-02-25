@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "HashTable.h"
 #define NUM_PARAMS   8
@@ -10,7 +11,24 @@ void freeIntegerType(void* intPtr);
 
 int main()
 {
-   char* params[NUM_PARAMS] = {"host", "target", "compilerOption", "hostCompilerOption", "targetCompilerOption", "linkerOption", "hostLinkerOption", "targetLinkerOption"};
+   char** params = calloc(NUM_PARAMS, sizeof(char*));
+   params[0] = malloc(255);
+   strcpy(params[0], "host");
+   params[1] = malloc(255);
+   strcpy(params[1], "target");
+   params[2] = malloc(255);
+   strcpy(params[2], "compilerOption");
+   params[3] = malloc(255);
+   strcpy(params[3], "hostCompilerOption");
+   params[4] = malloc(255);
+   strcpy(params[4], "targetCompilerOption");
+   params[5] = malloc(255);
+   strcpy(params[5], "linkerOption");
+   params[6] = malloc(255);
+   strcpy(params[6], "hostLinkerOption");
+   params[7] = malloc(255);
+   strcpy(params[7], "targetLinkerOption");
+
    int values[NUM_PARAMS] = {1, 2, 3, 4, 5, 6, 7, 8};
 
    HashTable* table = malloc(sizeof(HashTable));
@@ -18,8 +36,10 @@ int main()
 
    for (int i = 0; i < NUM_PARAMS; i++)
    {
-      HashTableItem item = {.key = params[i], .data = &values[i]};
-      hash_insert(table, &item, INTEGER_TYPE);
+      HashTableItem* item = malloc(sizeof(HashTableItem));
+      item->key = params[i];
+      item->data = &values[i];
+      hash_insert(table, item, INTEGER_TYPE);
    }
 
    for (int i = 0; i < NUM_PARAMS; i++)
@@ -44,10 +64,16 @@ int main()
    }
    printf("=============================================\n");
 
+   HashTableItem* removed = hash_remove(table, "compilerOption", INTEGER_TYPE);
+   if (removed != NULL)
+   {
+      free((char*)removed->key);
+   }
+
    printIntegerHashTable(table, "The Best Table");
 
-   freeHashTable(table, freeIntegerType);
+   freeHashTable(table, freeIntegerType, true, false);
    return 0;
 }
 
-void freeIntegerType(void* intPtr) {}
+void freeIntegerType(void* data) { free(data); }

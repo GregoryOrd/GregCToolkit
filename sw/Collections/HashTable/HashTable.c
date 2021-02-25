@@ -37,17 +37,30 @@ int checkType(const HashTable* table, int type)
 
 void initHashTable(HashTable* table, int type, int size)
 {
-   HashTableItem* tableData = calloc(sizeof(HashTableItem), size);
+   HashTableItem** tableData = calloc(sizeof(HashTableItem*), size);
    table->type = type;
    table->size = size;
    table->items = tableData;
 }
 
-void freeHashTable(HashTable* table, void (*freeData)(void*))
+void freeHashTable(HashTable* table, void (*freeData)(void*), bool keysOnHeap, bool dataOnHeap)
 {
-   for (int i = 0; i < table->size; i++)
+   if (keysOnHeap || dataOnHeap)
    {
-      freeData(&table->items[i]);
+      for (int i = 0; i < table->size; i++)
+      {
+         if (table->items[i] != NULL)
+         {
+            if (keysOnHeap)
+            {
+               free((char*)table->items[i]->key);
+            }
+            if (dataOnHeap)
+            {
+               freeData(table->items[i]->data);
+            }
+         }
+      }
    }
    free(table->items);
    free(table);
@@ -59,11 +72,11 @@ void* hash_lookup(const HashTable* table, const char* key, int type)
    if (!typeError)
    {
       unsigned int index = hash(key, table->size);
-      if (table->items[index].key != NULL && table->items[index].data != NULL)
+      if (table->items[index] != NULL)
       {
-         if (strcmp(table->items[index].key, key) == 0)
+         if (strcmp(table->items[index]->key, key) == 0)
          {
-            return table->items[index].data;
+            return table->items[index]->data;
          }
       }
    }
@@ -76,15 +89,33 @@ bool hash_insert(HashTable* table, HashTableItem* item, int type)
    if (!typeError)
    {
       unsigned int index = hash(item->key, table->size);
-      if (table->items[index].data == NULL)
+      if (table->items[index] == NULL)
       {
-         table->items[index].data = item->data;
-         table->items[index].key = item->key;
+         table->items[index] = item;
          return true;
       }
    }
 
    return false;
+}
+
+HashTableItem* hash_remove(HashTable* table, const char* key, int type)
+{
+   int typeError = checkType(table, type);
+   if (!typeError)
+   {
+      unsigned int index = hash(key, table->size);
+      if (table->items[index] != NULL)
+      {
+         if (strcmp(table->items[index]->key, key) == 0)
+         {
+            HashTableItem* temp = table->items[index];
+            table->items[index] = NULL;
+            return temp;
+         }
+      }
+   }
+   return NULL;
 }
 
 int hash_type(const HashTable* table) { return table->type; }
@@ -97,9 +128,9 @@ void printIntegerHashTable(const HashTable* table, const char* nameOfTable)
    printf("Size: %d\n", table->size);
    for (int i = 0; i < table->size; i++)
    {
-      if (table->items[i].key != NULL)
+      if (table->items[i] != NULL)
       {
-         printf("Table[%d]: (%s, %d)\n", i, table->items[i].key, *(int*)table->items[i].data);
+         printf("Table[%d]: (%s, %d)\n", i, table->items[i]->key, *(int*)table->items[i]->data);
       }
       else
       {
