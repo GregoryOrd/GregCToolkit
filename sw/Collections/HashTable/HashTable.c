@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define DELETED_NODE (HashTableItem*)0xFFFFFFFFFFFFFFFFUL
+
 //////////////////////////////////////////////////////////////////////
 //              Private Function Prototypes                         //
 //////////////////////////////////////////////////////////////////////
@@ -51,11 +53,11 @@ void freeHashTable(HashTable* table, void (*freeData)(void*), bool keysOnHeap, b
       {
          if (table->items[i] != NULL)
          {
-            if (keysOnHeap)
+            if (keysOnHeap && table->items[i] != NULL && table->items[i] != DELETED_NODE)
             {
                free((char*)table->items[i]->key);
             }
-            if (dataOnHeap)
+            if (dataOnHeap && table->items[i] != NULL && table->items[i] != DELETED_NODE)
             {
                freeData(table->items[i]->data);
             }
@@ -75,12 +77,20 @@ void* hash_lookup(const HashTable* table, const char* key, int type)
       for (int i = 0; i < table->size; i++)
       {
          int indexToTry = (i + index) % table->size;
+         if (table->items[indexToTry] == DELETED_NODE)
+         {
+            continue;
+         }
          if (table->items[indexToTry] != NULL)
          {
             if (strcmp(table->items[indexToTry]->key, key) == 0)
             {
                return table->items[indexToTry]->data;
             }
+         }
+         else if (table->items[indexToTry] == NULL)
+         {
+            return NULL;
          }
       }
    }
@@ -96,7 +106,7 @@ bool hash_insert(HashTable* table, HashTableItem* item, int type)
       for (int i = 0; i < table->size; i++)
       {
          int indexToTry = (i + index) % table->size;
-         if (table->items[indexToTry] == NULL)
+         if (table->items[indexToTry] == NULL || table->items[indexToTry] == DELETED_NODE)
          {
             table->items[indexToTry] = item;
             return true;
@@ -116,14 +126,23 @@ HashTableItem* hash_remove(HashTable* table, const char* key, int type)
       for (int i = 0; i < table->size; i++)
       {
          int indexToTry = (i + index) % table->size;
+
+         if (table->items[indexToTry] == DELETED_NODE)
+         {
+            continue;
+         }
          if (table->items[indexToTry] != NULL)
          {
             if (strcmp(table->items[indexToTry]->key, key) == 0)
             {
                HashTableItem* temp = table->items[indexToTry];
-               table->items[indexToTry] = NULL;
+               table->items[indexToTry] = DELETED_NODE;
                return temp;
             }
+         }
+         else if (table->items[indexToTry] == NULL)
+         {
+            return NULL;
          }
       }
    }
@@ -140,7 +159,11 @@ void printIntegerHashTable(const HashTable* table, const char* nameOfTable)
    printf("Size: %d\n", table->size);
    for (int i = 0; i < table->size; i++)
    {
-      if (table->items[i] != NULL)
+      if (table->items[i] == DELETED_NODE)
+      {
+         printf("Table[%d]: Deleted\n", i);
+      }
+      else if (table->items[i] != NULL)
       {
          printf("Table[%d]: (%s, %d)\n", i, table->items[i]->key, *(int*)table->items[i]->data);
       }
