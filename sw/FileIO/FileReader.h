@@ -1,7 +1,7 @@
 #ifndef FILE_READER_H
 #define FILE_READER_H
 
-#include "../ExternalProgramExecution/ArgListDefs.h"
+#include "../ArgList/ArgList.h"
 
 #define MAX_LINE_LENGTH 255
 
@@ -10,7 +10,7 @@ extern "C"{
 #endif
 
 int readFileWithActionAfterEachLine(const char* pathToTestFile, ArgList* argList, int (*action)(ArgList*));
-void addBufferToEndOfArgList(ArgList* list, char* buffer);
+void addStringToEndOfArgList(ArgList* list, char* buffer);
 void removeLastElementFromArgList(ArgList* list);
 
 #ifdef __cplusplus
