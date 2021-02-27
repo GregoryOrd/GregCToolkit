@@ -10,7 +10,6 @@ extern "C" {
 
 int makeDir(char* dirName);
 int removeDir(char* folderName);
-bool isVisibleDirectory(const struct dirent* fileOrSubDirectory);
 
 #ifdef __cplusplus
 }

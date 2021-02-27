@@ -1,9 +1,8 @@
 #ifndef FILE_READER_H
 #define FILE_READER_H
 
-#include "../ArgList/ArgList.h"
-
-#define MAX_LINE_LENGTH 255
+#include "../../ArgList/ArgList.h"
+#include "../FileSystemDefs.h"
 
 #ifdef __cplusplus
 extern "C"{

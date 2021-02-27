@@ -18,11 +18,3 @@ int removeDir(char* folderName)
    char* const argv[] = {rm, folderName, "-r", NULL};
    return forkAndRunChildProcess(argv);
 }
-
-bool isVisibleDirectory(const struct dirent* fileOrSubDirectory)
-{
-   bool dirNameStartsWithDot = strncmp(fileOrSubDirectory->d_name, ".", 1) == 0;
-   bool dirNameContainsSlashDot = strstr(fileOrSubDirectory->d_name, "/.") != NULL;
-   bool isHiddenDirectory = dirNameStartsWithDot || dirNameContainsSlashDot;
-   return !isHiddenDirectory && fileOrSubDirectory->d_type == DT_DIR;
-}
