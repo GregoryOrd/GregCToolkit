@@ -1,6 +1,8 @@
 #ifndef ARG_LIST_H
 #define ARG_LIST_H
 
+#include <stdbool.h>
+
 typedef struct ArgList
 {
     int size;
@@ -11,7 +13,7 @@ typedef struct ArgList
 extern "C" {
 #endif
 
-void freeArgList(ArgList* argList);
+void freeArgList(ArgList* argList, bool items);
 void addStringToEndOfArgList(ArgList* list, char* buffer);
 void removeLastElementFromArgList(ArgList* list);
 

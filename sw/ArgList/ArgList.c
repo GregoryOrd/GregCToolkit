@@ -5,8 +5,15 @@
 
 #include "../FileSystem/FileSystemDefs.h"
 
-void freeArgList(ArgList* argList)
+void freeArgList(ArgList* argList, bool items)
 {
+   if (items)
+   {
+      for (int i = 0; i < argList->size; i++)
+      {
+         free(argList->args[i]);
+      }
+   }
    free(argList->args);
    free(argList);
 }
