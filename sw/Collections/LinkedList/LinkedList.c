@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "../../FileSystem/FileSystemDefs.h"
+
 //////////////////////////////////////////////////////////////////////
 //              Private Function Prototypes                         //
 //////////////////////////////////////////////////////////////////////
@@ -111,7 +113,7 @@ Node* initializeNewNodeWithString(void* data)
    const char* stringData = (const char*)data;
 
    Node* newNode = malloc(sizeof(Node));
-   newNode->data = calloc(strlen(stringData) + 1, sizeof(char));
+   newNode->data = calloc(WINDOWS_MAX_PATH_LENGTH, sizeof(char));
    strcpy(newNode->data, stringData);
    newNode->next = 0;
 

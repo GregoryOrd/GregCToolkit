@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "../FileSystem/FileSystemDefs.h"
+
 void freeArgList(ArgList* argList)
 {
    free(argList->args);
@@ -12,7 +14,7 @@ void freeArgList(ArgList* argList)
 void addStringToEndOfArgList(ArgList* list, char* buffer)
 {
    list->args = realloc(list->args, ((list->size + 1) * sizeof(void*)));
-   list->args[list->size] = calloc(strlen(buffer) + 1, sizeof(char));
+   list->args[list->size] = calloc(WINDOWS_MAX_PATH_LENGTH, sizeof(char));
    strcpy((char*)list->args[list->size], buffer);
    list->size++;
 }
