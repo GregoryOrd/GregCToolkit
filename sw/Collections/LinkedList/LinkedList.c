@@ -18,7 +18,7 @@ Node* nodeAtIndex(const LinkedList* list, int index);
 void setNextNodes(LinkedList* list, Node* newNode, Node* currentPtr, int index);
 Node* initializeNewNodeWithData(void* data);
 Node* initializeNewNodeWithString(void* data);
-int insertWithFunctionPointer(LinkedList* list, void* data, int type, int index, NODE_INITIALIZATION_FUNC function);
+int insertWithFunctionPointer(LinkedList* list, void* data, int type, int index, NODE_INITIALIZATION_FUNC initializeNode);
 
 //////////////////////////////////////////////////////////////////////
 //              Function Implementation Section                     //
@@ -118,14 +118,14 @@ Node* initializeNewNodeWithString(void* data)
    return newNode;
 }
 
-int insertWithFunctionPointer(LinkedList* list, void* data, int type, int index, NODE_INITIALIZATION_FUNC function)
+int insertWithFunctionPointer(LinkedList* list, void* data, int type, int index, NODE_INITIALIZATION_FUNC initializeNode)
 {
    initializeIfNull(list, type);
    int validationError = validateListTypeAndIndex(list, type, index);
    if (!validationError)
    {
       Node* currentPtr = nodeAtIndex(list, index - 1);
-      Node* newNode = function(data);
+      Node* newNode = initializeNode(data);
       setNextNodes(list, newNode, currentPtr, index);
       list->size++;
       return 0;
