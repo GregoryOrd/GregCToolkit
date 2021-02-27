@@ -27,12 +27,13 @@ int readFileWithActionAfterEachLine(const char* pathToTestFile, ArgList* argList
             break;
          }
       }
+
+      fclose(filePtr);
    }
    else
    {
       error = 1;
    }
 
-   fclose(filePtr);
    return error;
 }
