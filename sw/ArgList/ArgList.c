@@ -19,6 +19,8 @@ void addStringToEndOfArgList(ArgList* list, char* buffer)
 
 void removeLastElementFromArgList(ArgList* list)
 {
+   void* last = list->args[list->size - 1];
    list->args = (void**)realloc(list->args, ((list->size - 1) * sizeof(void*)));
    list->size--;
+   free(last);
 }
