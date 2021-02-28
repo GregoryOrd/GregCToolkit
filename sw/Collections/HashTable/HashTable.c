@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "../../String/StringUtils.h"
+
 #define DELETED_NODE (HashTableItem*)0xFFFFFFFFFFFFFFFFUL
 
 //////////////////////////////////////////////////////////////////////
@@ -83,7 +85,7 @@ void* hash_lookup(const HashTable* table, const char* key, int type)
          }
          if (table->items[indexToTry] != NULL)
          {
-            if (strcmp(table->items[indexToTry]->key, key) == 0)
+            if (stringsAreEqual(table->items[indexToTry]->key, key))
             {
                return table->items[indexToTry]->data;
             }
@@ -133,7 +135,7 @@ HashTableItem* hash_remove(HashTable* table, const char* key, int type)
          }
          if (table->items[indexToTry] != NULL)
          {
-            if (strcmp(table->items[indexToTry]->key, key) == 0)
+            if (stringsAreEqual(table->items[indexToTry]->key, key))
             {
                HashTableItem* temp = table->items[indexToTry];
                table->items[indexToTry] = DELETED_NODE;

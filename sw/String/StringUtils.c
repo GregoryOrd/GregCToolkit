@@ -58,3 +58,5 @@ void removeTrailingReturnCarriage(char* str)
       str[size - 1] = '\0';
    }
 }
+
+bool stringsAreEqual(const char* s1, const char* s2) { return strcmp(s1, s2) == 0; }

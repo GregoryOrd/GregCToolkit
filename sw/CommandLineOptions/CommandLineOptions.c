@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "../String/StringUtils.h"
+
 void initCommandLineOptions(CommandLineOptionList* list, int size)
 {
    list->size = size;
@@ -54,7 +56,7 @@ int checkForOption(const CommandLineOptionList* optionsList, const char* optionT
    int foundIndex = -1;
    for (int i = 0; i < optionsList->size; i++)
    {
-      if (strcmp(optionToFind, optionsList->options[i].optionText) == 0)
+      if (stringsAreEqual(optionToFind, optionsList->options[i].optionText))
       {
          foundIndex = i;
       }
@@ -66,7 +68,7 @@ bool flagValueForOption(const CommandLineOptionList* optionsList, const char* op
 {
    for (int i = 0; i < optionsList->size; i++)
    {
-      if (strcmp(optionToFind, optionsList->options[i].optionText) == 0)
+      if (stringsAreEqual(optionToFind, optionsList->options[i].optionText))
       {
          return optionsList->options[i].flagValue;
       }

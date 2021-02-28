@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "../String/StringUtils.h"
 #include "CommandLineOptionsStruct.h"
 
 void freeCommandLineOptions_ll(LinkedList* list) { freeLinkedList(list, &freeCommandLineOption); }
@@ -41,7 +42,7 @@ int checkForOption_ll(const LinkedList* optionsList, const char* optionToFind, i
    for (int i = 0; i < optionsList->size; i++)
    {
       const CommandLineOption* option = (CommandLineOption*)at_ll(optionsList, type, i);
-      if (strcmp(optionToFind, option->optionText) == 0)
+      if (stringsAreEqual(optionToFind, option->optionText))
       {
          foundIndex = i;
       }
@@ -62,7 +63,7 @@ bool flagValueForOption_ll(const LinkedList* optionsList, const char* optionToFi
    for (int i = 0; i < optionsList->size; i++)
    {
       CommandLineOption* option = (CommandLineOption*)at_ll(optionsList, type, i);
-      if (strcmp(optionToFind, option->optionText) == 0)
+      if (stringsAreEqual(optionToFind, option->optionText))
       {
          return option->flagValue;
       }
