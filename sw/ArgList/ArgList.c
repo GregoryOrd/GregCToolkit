@@ -11,7 +11,10 @@ void freeArgList(ArgList* argList, bool items)
    {
       for (int i = 0; i < argList->size; i++)
       {
-         free(argList->args[i]);
+         if (argList->args[i] != NULL)
+         {
+            free(argList->args[i]);
+         }
       }
    }
    free(argList->args);
