@@ -7,7 +7,7 @@
 
 void freeArgList(ArgList* argList, bool items)
 {
-   if (items)
+   if (items && argList->args != NULL)
    {
       for (int i = 0; i < argList->size; i++)
       {
@@ -16,8 +16,8 @@ void freeArgList(ArgList* argList, bool items)
             free(argList->args[i]);
          }
       }
+      free(argList->args);
    }
-   free(argList->args);
    free(argList);
 }
 
