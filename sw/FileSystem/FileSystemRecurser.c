@@ -19,7 +19,7 @@ void recurseAndAddFilesToList(const char* basePath, ADD_TO_LIST_FUNCTION addFunc
    while ((fileOrSubDirectory = readdir(basePathDirectory)) != NULL)
    {
       copyNameIntoPath(fileOrSubDirectoryFullPath, basePath, fileOrSubDirectory->d_name);
-      addToListOrContinueRecursion(addFunction, args, fileOrSubDirectory, fileOrSubDirectoryFullPath);
+      addToListOrContinueRecursion(addFunction, args, basePath, fileOrSubDirectory, fileOrSubDirectoryFullPath);
    }
 
    closedir(basePathDirectory);
@@ -32,9 +32,10 @@ void copyNameIntoPath(char* path, const char* basePath, const char* fileOrSubDir
    strcat(path, fileOrSubDirectoryName);
 }
 
-void addToListOrContinueRecursion(ADD_TO_LIST_FUNCTION addFunction, ArgList* args, const struct dirent* fileOrSubDirectory, const char* fileOrSubDirectoryFullPath)
+void addToListOrContinueRecursion(
+    ADD_TO_LIST_FUNCTION addFunction, ArgList* args, const char* basePath, const struct dirent* fileOrSubDirectory, const char* fileOrSubDirectoryFullPath)
 {
-   bool added = addFunction(args, fileOrSubDirectory, fileOrSubDirectoryFullPath);
+   bool added = addFunction(args, basePath, fileOrSubDirectory, fileOrSubDirectoryFullPath);
    if (!added && isVisibleDirectory(fileOrSubDirectory))
    {
       recurseAndAddFilesToList(fileOrSubDirectoryFullPath, addFunction, args);
