@@ -30,15 +30,20 @@ void reverseString(char* dest, const char* src)
 
 void lowerString(char* dest, const char* src)
 {
-   const char* srcItr = src;
-   char* destItr = dest;
-   while (*srcItr != '\0')
+   int length = strlen(src);
+   for (int i = 0; i < length; i++)
    {
-      char c = *srcItr;
-      *destItr = tolower(c);
-      destItr++;
-      srcItr++;
+      char c = src[i];
+      if (c >= 'A' && c <= 'Z')
+      {
+         dest[i] = tolower(c);
+      }
+      else
+      {
+         dest[i] = c;
+      }
    }
+   dest[length] = '\0';
 }
 
 void removeTrailingNewLine(char* str)
