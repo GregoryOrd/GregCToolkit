@@ -16,8 +16,8 @@ void freeArgList(ArgList* argList, bool items)
             free(argList->args[i]);
          }
       }
-      free(argList->args);
    }
+   free(argList->args);
    free(argList);
 }
 
