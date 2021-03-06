@@ -24,8 +24,7 @@ void freeCommandLineOptions(CommandLineOptionList* list)
 {
    for (int i = 0; i < list->size; i++)
    {
-      free(&list->options[i].description);
-      free(&list->options[i].optionText);
+      free(&list->options[i]);
    }
    free(list);
 }

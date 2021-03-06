@@ -9,13 +9,7 @@
 
 void freeCommandLineOptions_ll(LinkedList* list) { freeLinkedList(list, &freeCommandLineOption); }
 
-void freeCommandLineOption(void* data)
-{
-   CommandLineOption* option = (CommandLineOption*)data;
-   free(option->optionText);
-   free(option->description);
-   free(option);
-}
+void freeCommandLineOption(void* data) {}
 
 void processCommandLineArgs_ll(int argc, const char* argv[], LinkedList* optionsList, int type)
 {
