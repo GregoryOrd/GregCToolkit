@@ -11,8 +11,8 @@
 //////////////////////////////////////////////////////////////////////
 //              Private Function Prototypes                         //
 //////////////////////////////////////////////////////////////////////
-unsigned int hash(const char* key, unsigned int tableSize);
-int checkHashTableType(const HashTable* table, int type);
+static unsigned int hash(const char* key, unsigned int tableSize);
+static int checkHashTableType(const HashTable* table, int type);
 
 //////////////////////////////////////////////////////////////////////
 //              Function Implementation Section                     //

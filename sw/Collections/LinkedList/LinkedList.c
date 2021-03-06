@@ -12,15 +12,15 @@
 //////////////////////////////////////////////////////////////////////
 typedef Node* (*NODE_INITIALIZATION_FUNC)(void* data);
 
-int checkLinkedListType(const LinkedList* list, int type);
-int checkIndex(const LinkedList* list, int index);
-void initializeIfNull(LinkedList* list, int type);
-int validateListTypeAndIndex(const LinkedList* list, int type, int index);
-Node* nodeAtIndex(const LinkedList* list, int index);
-void setNextNodes(LinkedList* list, Node* newNode, Node* currentPtr, int index);
-Node* initializeNewNodeWithData(void* data);
-Node* initializeNewNodeWithString(void* data);
-int insertWithFunctionPointer(LinkedList* list, void* data, int type, int index, NODE_INITIALIZATION_FUNC initializeNode);
+static int checkLinkedListType(const LinkedList* list, int type);
+static int checkIndex(const LinkedList* list, int index);
+static void initializeIfNull(LinkedList* list, int type);
+static int validateListTypeAndIndex(const LinkedList* list, int type, int index);
+static Node* nodeAtIndex(const LinkedList* list, int index);
+static void setNextNodes(LinkedList* list, Node* newNode, Node* currentPtr, int index);
+static Node* initializeNewNodeWithData(void* data);
+static Node* initializeNewNodeWithString(void* data);
+static int insertWithFunctionPointer(LinkedList* list, void* data, int type, int index, NODE_INITIALIZATION_FUNC initializeNode);
 
 //////////////////////////////////////////////////////////////////////
 //              Function Implementation Section                     //
