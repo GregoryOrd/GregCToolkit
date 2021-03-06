@@ -14,9 +14,6 @@ void initCommandLineOptions(CommandLineOptionList* list, int size)
 
    for (int i = 0; i < size; i++)
    {
-      list->options[i].description = calloc(255, sizeof(char));
-      list->options[i].optionText = calloc(255, sizeof(char));
-
       strcpy(list->options[i].description, NULL_COMMAND_LINE_DESCRIPTION);
       strcpy(list->options[i].optionText, NULL_COMMAND_LINE_OPTION_TEXT);
       list->options[i].flagValue = NULL_COMMAND_LINE_FLAG_VALUE;

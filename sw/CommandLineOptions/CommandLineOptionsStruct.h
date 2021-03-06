@@ -7,10 +7,12 @@
 
 #include <stdbool.h>
 
+#include "../FileSystem/FileSystemDefs.h"
+
 struct CommandLineOption
 {
-    char* optionText;
-    char* description;
+    char optionText[WINDOWS_MAX_PATH_LENGTH];
+    char description[WINDOWS_MAX_PATH_LENGTH];
     bool flagValue;
 } typedef CommandLineOption;
 
