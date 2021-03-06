@@ -6,5 +6,7 @@
 #define mv "mv"
 #define cp "cp"
 #define rm "rm"
+#define nm "nm"
+#define grep "grep"
 
 #endif
