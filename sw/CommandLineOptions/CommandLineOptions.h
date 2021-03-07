@@ -18,12 +18,12 @@ typedef struct CommandLineOptionList
 extern "C" {
 #endif  
 
-void initCommandLineOptions(CommandLineOptionList* options, int size);
 void freeCommandLineOptions(CommandLineOptionList* options);
-void processCommandLineArgs(int arc, char* argv[], CommandLineOptionList* options);
+void processCommandLineArgs(int arc, const char* argv[], CommandLineOptionList* options);
 int checkForOption(const CommandLineOptionList* optionsList, const char* optionToFind);
 void printSupportedOptions(const CommandLineOptionList* supportedOptions);
 bool flagValueForOption(const CommandLineOptionList* optionsList, const char* optionToFind);
+void addOptionIfItDoesntAlreadyExist(CommandLineOptionList* optionsList, CommandLineOption newOption);
 
 #ifdef __cplusplus
 }

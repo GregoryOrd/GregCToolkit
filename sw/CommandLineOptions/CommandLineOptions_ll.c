@@ -44,7 +44,7 @@ int checkForOption_ll(const LinkedList* optionsList, const char* optionToFind, i
    return foundIndex;
 }
 
-void addOptionIfItDoesntAlreadyExist(LinkedList* commandLineOptions, CommandLineOption* option, int type, int index)
+void addOptionIfItDoesntAlreadyExist_ll(LinkedList* commandLineOptions, CommandLineOption* option, int type, int index)
 {
    if (checkForOption_ll(commandLineOptions, option->optionText, type) == -1)
    {

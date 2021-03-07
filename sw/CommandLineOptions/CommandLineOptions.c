@@ -7,29 +7,13 @@
 
 #include "../String/StringUtils.h"
 
-void initCommandLineOptions(CommandLineOptionList* list, int size)
-{
-   list->size = size;
-   list->options = malloc(size * sizeof(CommandLineOption));
-
-   for (int i = 0; i < size; i++)
-   {
-      strcpy(list->options[i].description, NULL_COMMAND_LINE_DESCRIPTION);
-      strcpy(list->options[i].optionText, NULL_COMMAND_LINE_OPTION_TEXT);
-      list->options[i].flagValue = NULL_COMMAND_LINE_FLAG_VALUE;
-   }
-}
-
 void freeCommandLineOptions(CommandLineOptionList* list)
 {
-   for (int i = 0; i < list->size; i++)
-   {
-      free(&list->options[i]);
-   }
+   free(list->options);
    free(list);
 }
 
-void processCommandLineArgs(int argc, char* argv[], CommandLineOptionList* optionsList)
+void processCommandLineArgs(int argc, const char* argv[], CommandLineOptionList* optionsList)
 {
    for (int i = 1; i < argc; i++)
    {
@@ -78,5 +62,17 @@ void printSupportedOptions(const CommandLineOptionList* supportedOptions)
    for (int optionNum = 0; optionNum < supportedOptions->size; optionNum++)
    {
       printf("%s    %s\n", supportedOptions->options[optionNum].optionText, supportedOptions->options[optionNum].description);
+   }
+}
+
+void addOptionIfItDoesntAlreadyExist(CommandLineOptionList* optionsList, CommandLineOption newOption)
+{
+   if (checkForOption(optionsList, newOption.optionText) == -1)
+   {
+      optionsList->options = realloc(optionsList->options, (optionsList->size + 1) * sizeof(CommandLineOption));
+      strcpy(optionsList->options[optionsList->size].description, newOption.description);
+      strcpy(optionsList->options[optionsList->size].optionText, newOption.optionText);
+      optionsList->options[optionsList->size].flagValue = newOption.flagValue;
+      optionsList->size++;
    }
 }
