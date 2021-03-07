@@ -49,22 +49,20 @@ void initHashTable(HashTable* table, int type, int size)
 
 void freeHashTable(HashTable* table, void (*freeData)(void*), bool keysOnHeap, bool dataOnHeap)
 {
-   if (keysOnHeap || dataOnHeap)
+   for (int i = 0; i < table->size; i++)
    {
-      for (int i = 0; i < table->size; i++)
+      if (table->items[i] != NULL)
       {
-         if (table->items[i] != NULL)
+         if (keysOnHeap && table->items[i] != NULL && table->items[i] != DELETED_NODE)
          {
-            if (keysOnHeap && table->items[i] != NULL && table->items[i] != DELETED_NODE)
-            {
-               free((char*)table->items[i]->key);
-            }
-            if (dataOnHeap && table->items[i] != NULL && table->items[i] != DELETED_NODE)
-            {
-               freeData(table->items[i]->data);
-            }
+            free((char*)table->items[i]->key);
+         }
+         if (dataOnHeap && table->items[i] != NULL && table->items[i] != DELETED_NODE)
+         {
+            freeData(table->items[i]->data);
          }
       }
+      free(table->items[i]);
    }
    free(table->items);
    free(table);
