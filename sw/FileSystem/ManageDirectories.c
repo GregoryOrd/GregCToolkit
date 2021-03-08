@@ -4,8 +4,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../externalProgramExecution/CommandLineExecutables.h"
-#include "../externalProgramExecution/ExternalProgramExecution.h"
+#include "../ExternalProgramExecution/CommandLineExecutables.h"
+#include "../ExternalProgramExecution/ExternalProgramExecution.h"
 
 int makeDir(char* dirName)
 {
