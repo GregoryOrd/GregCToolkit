@@ -6,6 +6,7 @@
 #include <string.h>
 
 #include "../../FileSystem/FileSystemDefs.h"
+#include "../../String/StringUtils.h"
 
 //////////////////////////////////////////////////////////////////////
 //              Private Function Prototypes                         //
@@ -193,6 +194,7 @@ int push_front_ll(LinkedList* list, void* data, int type) { return insert_ll(lis
 int setAt_ll(LinkedList* list, void* data, int type, int index)
 {
    int validationError = validateListTypeAndIndex(list, type, index);
+   if (!validationError)
    {
       Node* currentPtr = nodeAtIndex(list, index);
       currentPtr->data = data;
@@ -204,6 +206,7 @@ int setAt_ll(LinkedList* list, void* data, int type, int index)
 const void* at_ll(const LinkedList* list, int type, int index)
 {
    int validationError = validateListTypeAndIndex(list, type, index);
+   if (!validationError)
    {
       Node* currentPtr = nodeAtIndex(list, index);
       return currentPtr->data;
@@ -212,6 +215,23 @@ const void* at_ll(const LinkedList* list, int type, int index)
 }
 
 const void* last_ll(const LinkedList* list, int type) { return at_ll(list, type, list->size - 1); }
+
+bool contains_string_ll(const LinkedList* list, char* data, int type)
+{
+   int typeError = checkLinkedListType(list, type);
+   if (!typeError)
+   {
+      for (int i = 0; i < list->size; i++)
+      {
+         Node* node = nodeAtIndex(list, i);
+         if (stringsAreEqual((char*)node->data, data))
+         {
+            return true;
+         }
+      }
+   }
+   return false;
+}
 
 void printIntegerLinkedList(const LinkedList* list, const char* nameOfList)
 {
