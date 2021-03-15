@@ -8,5 +8,6 @@
 #define rm "rm"
 #define nm "nm"
 #define grep "grep"
+#define cppfilt_demangle "c++filt"
 
 #endif

@@ -1,6 +1,7 @@
 #include "StringUtils.h"
 
 #include <ctype.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -65,3 +66,13 @@ void removeTrailingReturnCarriage(char* str)
 }
 
 bool stringsAreEqual(const char* s1, const char* s2) { return strcmp(s1, s2) == 0; }
+
+void removeFunctionBrackets(char* str)
+{
+   int length = strlen(str);
+   if (str[length - 2] == '(' && str[length - 1] == ')')
+   {
+      str[length - 2] = '\0';
+      str[length - 1] = '\0';
+   }
+}
