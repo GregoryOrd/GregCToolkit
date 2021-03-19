@@ -216,7 +216,7 @@ const void* at_ll(const LinkedList* list, int type, int index)
 
 const void* last_ll(const LinkedList* list, int type) { return at_ll(list, type, list->size - 1); }
 
-bool contains_string_ll(const LinkedList* list, char* data, int type)
+bool contains_string_ll(const LinkedList* list, const char* data, int type)
 {
    int typeError = checkLinkedListType(list, type);
    if (!typeError)

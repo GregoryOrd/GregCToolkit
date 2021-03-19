@@ -58,7 +58,7 @@ extern "C"
    const void* at_ll(const LinkedList* list, int type, int index);
    const void* last_ll(const LinkedList* list, int type);
 
-   bool contains_string_ll(const LinkedList* list, char* data, int type);
+   bool contains_string_ll(const LinkedList* list, const char* data, int type);
 
    // Functions can be added here to print linked list for all basic types
    // For custom structs, a similar function must live outside of the toolkit
