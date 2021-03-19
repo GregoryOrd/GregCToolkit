@@ -25,6 +25,17 @@ int popenChildProcess(int argc, char* const argv[])
    return WEXITSTATUS(status);
 }
 
+int popenChildProcess_NoCommandPrint(int argc, char* const argv[])
+{
+   char commandText[255] = "";
+   getCommandText(commandText, argc, argv);
+
+   FILE* rd = NULL;
+   rd = popen(commandText, "r");
+   int status = pclose(rd);
+   return WEXITSTATUS(status);
+}
+
 int forkAndRunChildProcess(char* const argv[])
 {
 #ifdef __WINDOWS__

@@ -16,6 +16,7 @@ extern "C" {
 
 //Expect the first element of argv to be the path to the executable program
 int popenChildProcess(int argc, char * const argv[]);
+int popenChildProcess_NoCommandPrint(int argc, char* const argv[]);
 int forkAndRunChildProcess(char* const argv[]);
 
 #ifdef __WIDNOWS__
