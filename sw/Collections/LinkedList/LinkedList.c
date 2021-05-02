@@ -216,6 +216,23 @@ const void* at_ll(const LinkedList* list, int type, int index)
 
 const void* last_ll(const LinkedList* list, int type) { return at_ll(list, type, list->size - 1); }
 
+bool contains_ll(const LinkedList* list, const void* data, int type)
+{
+   int typeError = checkLinkedListType(list, type);
+   if (!typeError)
+   {
+      for (int i = 0; i < list->size; i++)
+      {
+         Node* node = nodeAtIndex(list, i);
+         if (node->data == data)
+         {
+            return true;
+         }
+      }
+   }
+   return false;
+}
+
 bool contains_string_ll(const LinkedList* list, const char* data, int type)
 {
    int typeError = checkLinkedListType(list, type);
