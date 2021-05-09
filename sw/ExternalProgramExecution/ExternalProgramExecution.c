@@ -13,26 +13,45 @@
 #include <unistd.h>
 #endif
 
+long commandLineMax()
+{
+   int bufferSize = 255;
+   char buffer[bufferSize];
+   FILE* pipe = popen("getconf ARG_MAX", "r");
+   fgets(buffer, bufferSize, pipe);
+   pclose(pipe);
+
+   return atoi(buffer);
+}
+
 int popenChildProcess(int argc, char* const argv[])
 {
-   char commandText[255] = "";
-   getCommandText(commandText, argc, argv);
+   char* commandText = calloc(commandLineMax(), sizeof(char));
+   if (!getCommandText(commandText, argc, argv))
+   {
+      printf("Error. Command line character limit (%ld) exceeded.\n", commandLineMax());
+   }
    printf("%s\n", commandText);
 
    FILE* rd = NULL;
    rd = popen(commandText, "r");
    int status = pclose(rd);
+   free(commandText);
    return WEXITSTATUS(status);
 }
 
 int popenChildProcess_NoCommandPrint(int argc, char* const argv[])
 {
-   char commandText[255] = "";
-   getCommandText(commandText, argc, argv);
+   char* commandText = calloc(commandLineMax(), sizeof(char));
+   if (!getCommandText(commandText, argc, argv))
+   {
+      printf("Error. Command line character limit (%ld) exceeded.\n", commandLineMax());
+   }
 
    FILE* rd = NULL;
    rd = popen(commandText, "r");
    int status = pclose(rd);
+   free(commandText);
    return WEXITSTATUS(status);
 }
 
@@ -76,17 +95,26 @@ int forkAndRunChildProcess_linux(char* const argv[])
 }
 #endif
 
-void getCommandText(char* commandText, int argc, char* const argv[])
+bool getCommandText(char* commandText, int argc, char* const argv[])
 {
+   long commandTextLength = strlen(argv[0]);
    strcpy(commandText, argv[0]);
    for (int i = 1; i < argc; i++)
    {
       if (argv[i] != NULL)
       {
-         strcat(commandText, " ");
-         strcat(commandText, argv[i]);
+         if (commandTextLength + strlen(argv[i]) + 1 < commandLineMax())
+         {
+            strcat(commandText, " ");
+            strcat(commandText, argv[i]);
+         }
+         else
+         {
+            return false;
+         }
       }
    }
+   return true;
 }
 
 void executeAndExit(char* const argv[])

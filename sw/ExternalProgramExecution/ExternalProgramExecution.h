@@ -2,6 +2,7 @@
 #define EXTERNAL_PROGRAM_EXECUTION_H
 
 #include <sys/types.h>
+#include <stdbool.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -25,7 +26,8 @@ int forkAndRunChildProcess_windows(char* const argv[]);
 int forkAndRunChildProcess_linux(char* const argv[]);
 #endif
 
-void getCommandText(char* commandText, int argc, char* const argv[]);
+long commandLineMax();
+bool getCommandText(char* commandText, int argc, char* const argv[]);
 void executeAndExit(char* const argv[]);
 int waitAndExit(pid_t pid, int status);
 
